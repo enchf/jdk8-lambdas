@@ -1,7 +1,6 @@
 /**
  * Copyright © 2016, Oracle and/or its affiliates. All rights reserved.
  *
- * JDK 8 MOOC Lesson 1 homework
  */
 
 import java.util.ArrayList;
@@ -9,12 +8,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 /**
  * @author Speakjava (Simon Ritter)
  */
-public class Lesson1 {
+public class SolutionsLesson1 {
   /**
    * Run the exercises to ensure we got the right answers
    */
@@ -42,16 +40,16 @@ public class Lesson1 {
    * Exercise 1
    *
    * Create a string that consists of the first letter of each word in the list
-   * of Strings provided.
+   * of Strings.
    */
   private void exercise1() {
     List<String> list = Arrays.asList(
         "alpha", "bravo", "charlie", "delta", "echo", "foxtrot");
 
-     System.out.println(list
-             .stream()
-             .map(s -> s.substring(0, 1))
-             .collect(Collectors.joining()));
+    StringBuilder sb = new StringBuilder();
+    list.forEach(s -> sb.append(s.charAt(0)));
+    String result = sb.toString();
+    System.out.println("Exercise 1 result = " + result);
   }
 
   /**
@@ -60,13 +58,11 @@ public class Lesson1 {
    * Remove the words that have odd lengths from the list.
    */
   private void exercise2() {
-    List<String> list;
+    List<String> list = new ArrayList<>(Arrays.asList(
+        "alpha", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
-    (list = new ArrayList<>(
-            Arrays.asList("alpha", "bravo", "charlie", "delta", "echo", "foxtrot")))
-            .removeIf(s -> s.length() % 2 == 1);
-
-    System.out.println(list);
+    list.removeIf(s -> (s.length() & 1) == 1);
+    list.forEach(System.out::println);
   }
 
   /**
@@ -77,8 +73,8 @@ public class Lesson1 {
   private void exercise3() {
     List<String> list = new ArrayList<>(Arrays.asList(
         "alpha", "bravo", "charlie", "delta", "echo", "foxtrot"));
-
-    System.out.println(list.stream().map(String::toUpperCase).collect(Collectors.toList()));
+    list.replaceAll(String::toUpperCase);
+    list.forEach(System.out::println);
   }
 
   /**
@@ -93,10 +89,10 @@ public class Lesson1 {
     map.put("b", 2);
     map.put("a", 1);
 
-    System.out.println(map.entrySet()
-            .stream()
-            .map(e -> e.getKey() + e.getValue())
-            .collect(Collectors.joining()));
+    StringBuilder sb = new StringBuilder();
+    map.forEach((k, v) -> sb.append(String.format("%s%s", k, v)));
+    String result = sb.toString();
+    System.out.println("Exercise 4 result = " + result);
   }
 
   /**
@@ -109,14 +105,14 @@ public class Lesson1 {
 
     new Thread(() -> list.forEach(System.out::println)).start();
   }
-
-  /**
+  
+ /**
    * Main entry point for application
    *
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    Lesson1 lesson = new Lesson1();
+    SolutionsLesson1 lesson = new SolutionsLesson1();
     lesson.runExercises();
   }
 }
